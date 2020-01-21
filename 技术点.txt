@@ -1,0 +1,12 @@
+一、new、operator new、malloc之间的关系？
+operator new内部调用malloc函数
+new表达式可拆分为两步：1.分配存储对象的内存空间 2.调用其构造函数
+但在代码层面，程序员不能直接调用构造函数，除非使用placement new来实现
+
+二、delete expression
+先调用析构函数
+然后operator delete释放内存
+
+三、placement new
+placement new允许我们将object构建于allocated memory中
+没有所谓的placement delete,因为placement new根本没有分配memory内存
