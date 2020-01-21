@@ -1,0 +1,3 @@
+D:/CLionProject/cplusplus_memory_manager/cmake-build-debug/CMakeFiles/cplusplus_memory_manager.dir
+D:/CLionProject/cplusplus_memory_manager/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/CLionProject/cplusplus_memory_manager/cmake-build-debug/CMakeFiles/rebuild_cache.dir

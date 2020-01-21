@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="EwrSlRyM" />
+  </component>
+  <component name="ProjectId" id="1Wh6eQQ2YQxQODaZ8yAOV836g4X" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="true" />
+  </component>
+  <component name="RunManager">
+    <configuration name="cplusplus_memory_manager" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cplusplus_memory_manager" TARGET_NAME="cplusplus_memory_manager" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cplusplus_memory_manager" RUN_TARGET_NAME="cplusplus_memory_manager">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+</project>

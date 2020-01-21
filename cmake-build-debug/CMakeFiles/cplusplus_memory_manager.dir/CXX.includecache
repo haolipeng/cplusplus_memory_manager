@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+D:/CLionProject/cplusplus_memory_manager/main.cpp
+iostream
+-
+perClassAllocator.h
+D:/CLionProject/cplusplus_memory_manager/perClassAllocator.h
+
+D:/CLionProject/cplusplus_memory_manager/perClassAllocator.cpp
+perClassAllocator.h
+D:/CLionProject/cplusplus_memory_manager/perClassAllocator.h
+
+D:/CLionProject/cplusplus_memory_manager/perClassAllocator.h
+cstddef
+-
+iostream
+-
+
