@@ -215,6 +215,25 @@ void test_overload_operator_new_and_array_new()
         ::delete [] pArray;
     }
 }
+/*
+ * 测试placement new*/
+void test_overload_placement_new()
+{
+    cout<< "\n\ntest_overload_placement_new().................................." <<endl;
+    cout<<"size of OverloadClassNewAndDelete:"<<sizeof(OverloadClassNewAndDelete)<<endl;
+    OverloadClassNewAndDelete start;
+
+    OverloadClassNewAndDelete* p1 = new OverloadClassNewAndDelete; //op-new(size_t)
+    OverloadClassNewAndDelete* p2 = new (&start) OverloadClassNewAndDelete; //op-new(size_t,void*)
+    OverloadClassNewAndDelete* p3 = new (100) OverloadClassNewAndDelete;//op-new(size_t,long)
+    OverloadClassNewAndDelete* p4 = new (100, 'a') OverloadClassNewAndDelete;//op-new(size_t,long,char)
+
+    //释放全部的内存
+    delete p1;
+    //delete p2;
+    delete p3;
+    delete p4;
+}
 
 int main()
 {
@@ -223,7 +242,8 @@ int main()
     //test_call_ctor_directly();
     //test_per_class_allocator_1();
     //test_per_class_allocator_2();
-    test_overload_operator_new_and_array_new();
+    //test_overload_operator_new_and_array_new();
+    test_overload_placement_new();
     cout<< "test is done!" <<endl;
     system("pause");
     return 0;

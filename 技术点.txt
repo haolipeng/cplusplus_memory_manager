@@ -10,3 +10,4 @@ new表达式可拆分为两步：1.分配存储对象的内存空间 2.调用其
 三、placement new
 placement new允许我们将object构建于allocated memory中
 没有所谓的placement delete,因为placement new根本没有分配memory内存
+placement new的第一参数必须是size_t

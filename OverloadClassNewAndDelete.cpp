@@ -6,25 +6,49 @@
 
 void *OverloadClassNewAndDelete::operator new(size_t size) {
     OverloadClassNewAndDelete* p = (OverloadClassNewAndDelete*)malloc(size);
-    cout << "Foo::operator new(), size=" << size << "\t  return: " << p << endl;
+    cout << "OverloadClassNewAndDelete::operator new(), size=" << size << "\t  return: " << p << endl;
 
     return p;
 }
 
 void *OverloadClassNewAndDelete::operator new[](size_t size) {
     OverloadClassNewAndDelete* p = (OverloadClassNewAndDelete*)malloc(size);  //crash, 問題可能出在這兒
-    cout << "Foo::operator new[](), size=" << size << "\t  return: " << p << endl;
+    cout << "OverloadClassNewAndDelete::operator new[](), size=" << size << "\t  return: " << p << endl;
 
     return p;
 }
 
 void OverloadClassNewAndDelete::operator delete(void *deadObject, size_t size) {
-    cout << "Foo::operator delete(), pdead= " << deadObject << "  size= " << size << endl;
+    cout << "OverloadClassNewAndDelete::operator delete(), pdead= " << deadObject << "  size= " << size << endl;
     free(deadObject);
 }
 
 void OverloadClassNewAndDelete::operator delete[](void *deadObject, size_t size) {
-    cout << "Foo::operator delete[](), pdead= " << deadObject << "  size= " << size << endl;
+    cout << "OverloadClassNewAndDelete::operator delete[](), pdead= " << deadObject << "  size= " << size << endl;
 
     free(deadObject);
+}
+
+void OverloadClassNewAndDelete::operator delete(void *deadObject) {
+    cout << "OverloadClassNewAndDelete::operator delete(), pdead= " << deadObject  << endl;
+
+    free(deadObject);
+}
+
+void OverloadClassNewAndDelete::operator delete[](void *deadObject) {
+    cout << "OverloadClassNewAndDelete::operator delete[](), pdead= " << deadObject << endl;
+
+    free(deadObject);
+}
+
+void OverloadClassNewAndDelete::operator delete(void *deadObject, void *start) {
+    cout<<"OverloadClassNewAndDelete::operator delete(void *deadObject, void *start)"<<endl;
+}
+
+void OverloadClassNewAndDelete::operator delete(void *deadObject, long extra) {
+    cout<<"OverloadClassNewAndDelete::operator delete(void *deadObject, long extra)"<<endl;
+}
+
+void OverloadClassNewAndDelete::operator delete(void *deadObject, long extra, char a) {
+    cout<<"OverloadClassNewAndDelete::operator delete(void *deadObject, long extra, char a)"<<endl;
 }
