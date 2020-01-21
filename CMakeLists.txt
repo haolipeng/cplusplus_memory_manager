@@ -3,4 +3,4 @@ project(cplusplus_memory_manager)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(cplusplus_memory_manager main.cpp perClassAllocator.cpp perClassAllocator.h common.h perClassAllocatorBetter.cpp perClassAllocatorBetter.h)
+add_executable(cplusplus_memory_manager main.cpp perClassAllocator.cpp perClassAllocator.h common.h perClassAllocatorBetter.cpp perClassAllocatorBetter.h OverloadClassNewAndDelete.cpp OverloadClassNewAndDelete.h)

@@ -1,7 +1,10 @@
 #include <cstdlib>//malloc,free
 #include "common.h"//#include <iostream>
+#include "perClassAllocator.h"
 #include "perClassAllocatorBetter.h"
+#include "OverloadClassNewAndDelete.h"
 
+using namespace std;
 //////////////////////////各种宏开关////////////////////////////////
 #define USE_OPERATOR_NEW_DELETE 0           //是否启用重载new和delete
 
@@ -92,7 +95,9 @@ void test_new_array()
     //用户友好的编译器会提示很多代码逻辑上的简单错误
     //delete array;
 }
-
+/*
+ * 测试3:测试operator new和operator delete
+ * */
 void test_operator_new_delete() {
     Complex* pc;
     try {
@@ -127,11 +132,12 @@ void test_operator_new_delete() {
     }
 }
 
-#include "perClassAllocator.h"
-//重载类的operator new和operator delete
-//测试per-class allocator
+/*
+ * 测试4:基础版的内存申请器
+ * */
 void test_per_class_allocator_1()
 {
+    cout << "\ntest_per_class_allocator_1().......... \n";
     cout<< sizeof(perClassAllocator) <<endl;
 
     size_t const N = 100;
@@ -152,6 +158,9 @@ void test_per_class_allocator_1()
     }
 }
 
+/*
+ * 测试5:改进版的内存申请器
+ * */
 void test_per_class_allocator_2()
 {
     cout << "\ntest_per_class_allocator_2().......... \n";
@@ -180,14 +189,41 @@ void test_per_class_allocator_2()
     for (int i=0; i< N; ++i)
         delete p[i];
 }
+/*
+ * 测试重载后的new和delete*/
+void test_overload_operator_new_and_array_new()
+{
+    cout << "\ntest_overload_operator_new_and_array_new().......... \n";
+
+    cout << "sizeof(OverloadClassNewAndDelete)= " << sizeof(OverloadClassNewAndDelete) << endl;
+
+    OverloadClassNewAndDelete* p = new OverloadClassNewAndDelete(7);
+    delete p;
+
+    OverloadClassNewAndDelete* pArray = new OverloadClassNewAndDelete[5];
+    delete [] pArray;
+
+    {
+        cout << "testing global expression ::new and ::new[] \n";
+        // 這會繞過 overloaded new(), delete(), new[](), delete[]()
+        // 但當然 ctor, dtor 都會被正常呼叫.
+
+        OverloadClassNewAndDelete* p = ::new OverloadClassNewAndDelete(7);
+        ::delete p;
+
+        OverloadClassNewAndDelete* pArray = ::new OverloadClassNewAndDelete[5];
+        ::delete [] pArray;
+    }
+}
 
 int main()
 {
     cout<<"begin testing!"<<endl;
     //test_new_array();
-    //test_per_class_allocator_1();
     //test_call_ctor_directly();
-    test_per_class_allocator_2();
+    //test_per_class_allocator_1();
+    //test_per_class_allocator_2();
+    test_overload_operator_new_and_array_new();
     cout<< "test is done!" <<endl;
     system("pause");
     return 0;
