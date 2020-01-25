@@ -11,3 +11,23 @@ new表达式可拆分为两步：1.分配存储对象的内存空间 2.调用其
 placement new允许我们将object构建于allocated memory中
 没有所谓的placement delete,因为placement new根本没有分配memory内存
 placement new的第一参数必须是size_t
+
+四、glibc 2.9雏形
+将我们实现的allocator进一步实现为具有16条free-lists，并不再以class内的static来呈现时，
+而是一个global allocator，就是glibc 2.9的雏形。
+
+五、new handler
+当operator new没能力为你分配出你所申请的内存时，会拋一个std::bad_alloc exception.某些老版本的编译器则是返回0
+在抛出异常前，会先调用用户设置的回调函数new_handler
+typedef void (*new_handler)();
+new_handler set_new_handler(new_handler p) throw();
+
+设计良好的new handler只有两个选择：
+1.让更多的memory可用
+2.调用abort()或exit()
+
+六、模板
+类模板
+函数模板
+成员模板
+起码这三种模板自己要熟悉，平时要勤动手写

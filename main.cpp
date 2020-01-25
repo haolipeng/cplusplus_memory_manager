@@ -244,29 +244,21 @@ class Goo
 public:
     complex<double> c;
     string str;
-    static Common::allocator myAlloc;
 public:
     Goo()= default;
     ~Goo() = default;
     Goo(const complex<double>& x):c(x) {}
-    static void* operator new(size_t size)
-    {
-        return myAlloc.allocate(size);
-    }
-
-    static void operator delete(void* ptr, size_t size)
-    {
-        return myAlloc.deallocate(ptr, size);
-    }
+    DECLARE_POOL_ALLOC()
 };
 //静态变量初始化
-Common::allocator Goo::myAlloc;
+IMPLEMENT_POOL_ALLOC(Goo)
 
 void test_common_allocator()
 {
     Goo* p[100];
     cout<<"sizeof(Goo)="<< sizeof(Goo)<<endl;
 
+    //查看其对应的地址是不是以指定大小间隔
     for (int i = 0; i < 17; ++i) {
         p[i] = new Goo(complex<double>(i,i));
         cout<<p[i]<<""<<p[i]->c<<endl;
@@ -275,6 +267,32 @@ void test_common_allocator()
     for (int j = 0; j < 17; ++j) {
         delete p[j];
     }
+}
+
+#include <ext/pool_allocator.h>
+template<typename Alloc>
+void cookie_test(Alloc alloc, size_t n)
+{
+    typename Alloc::value_type *p1,*p2,*p3;
+    p1 = alloc.allocate(n);
+    p2 = alloc.allocate(n);
+    p3 = alloc.allocate(n);
+
+    cout<<"p1="<<p1<<"\t"<<"p2="<<p2<<"\t"<<"p3="<<p3<<"\t"<<endl;
+
+    alloc.deallocate(p1, sizeof(typename Alloc::value_type));
+    alloc.deallocate(p2, sizeof(typename Alloc::value_type));
+    alloc.deallocate(p3, sizeof(typename Alloc::value_type));
+}
+
+/*测试分配器的性能 __pool_alloc vs std::allocator*/
+void test_pool_allocator()
+{
+    cout<<"start test __gnu_cxx::__pool_alloc<double>"<<endl;
+    cookie_test(__gnu_cxx::__pool_alloc<double>(), 1);//p1=0x6c6fd8     p2=0x6c6fe0     p3=0x6c6fe8
+
+    cout<<"start test std::allocator<double>"<<endl;
+    cookie_test(std::allocator<double>(), 1);//p1=0x6c7120     p2=0x6c7130     p3=0x6c7140
 }
 
 int main()
@@ -286,7 +304,8 @@ int main()
     //test_per_class_allocator_2();
     //test_overload_operator_new_and_array_new();
     //test_overload_placement_new();
-    test_common_allocator();
+    //test_common_allocator();
+    test_pool_allocator();
     cout<< "test is done!" <<endl;
     system("pause");
     return 0;

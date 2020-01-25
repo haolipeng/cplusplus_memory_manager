@@ -24,4 +24,16 @@ private:
 };
 }
 
+/*声明宏*/
+#define DECLARE_POOL_ALLOC()\
+public:\
+    static void* operator new(size_t size) { return myAlloc.allocate(size); }\
+    static void operator delete(void* ptr) { return myAlloc.deallocate(ptr, 0); }\
+protected:\
+    static Common::allocator myAlloc;
+
+/*实现宏*/
+#define IMPLEMENT_POOL_ALLOC(class_name)\
+Common::allocator class_name::myAlloc;
+
 #endif //CPLUSPLUS_MEMORY_MANAGER_ALLOCATOR_H
